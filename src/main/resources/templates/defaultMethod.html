@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" >
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" ></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"  />
+<style>
+  body{
+    margin-top: 100px;
+  }
+  .content{
+    margin:auto;
+    border: 1px solid cyan;
+    padding: 24px 32px;
+
+  }
+  .content h3{
+    text-align: center;
+    color: #0047ff;
+  }
+  .items{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border: 1px solid #d9d9d9;
+    padding:16px;
+  }
+  .result{
+    width: 100%;
+    height: 300px;
+    overflow-y:scroll;
+  }
+  .hidden{
+    display: none;
+  }
+  .active{
+    display: block;
+  }
+  .flex-d {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+  .flex-d i{
+    font-size: 32px!important;
+    color: #0047ff;
+    margin-right: 16px;
+  }
+
+</style>
+<body>
+<div class="content col-md-4">
+  <div class="flex-d" >
+    <a href="http://localhost:8080">
+      <i class="fa-solid fa-home"></i>
+    </a>
+    <h3>Demo default method</h3>
+  </div>
+  <div >
+    <div class="items">
+      <span>Example of Default Method </span>
+      <i class="fa-solid fa-chevron-down details"></i>
+    </div>
+    <textarea class="result hidden" data-id="1">[[${content_1}]]</textarea>
+
+  </div>
+  <div >
+    <div class="items">
+      <span>Example of count default method of Stream</span>
+      <i class="fa-solid fa-chevron-down details"></i>
+    </div>
+    <textarea class="result hidden" data-id="2">[[${content_2}]]</textarea>
+
+  </div>
+</div>
+
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" ></script>
+<script>
+  index_flag = -1
+  flag = true
+  $(".details ").on("click", function (i,e){
+    var index = $('.details').index(this) +1
+
+    console.log(flag)
+    // if case is index_flag as fisrt click need active textarea here
+    // if case is index_flag as click 2 items other need hidden all item and active item click
+    // if case is flag equals true as click 1 item 2 times need hidden item click
+    if(index_flag == -1 || index_flag != index || flag == true ){
+      $(".content").find(".result").map(function(index, element) {
+        $(element).removeClass("active");
+        $(element).addClass("hidden");
+
+      })
+      index_flag = index;
+      $('.result[data-id='+index+']').addClass("active");
+      $('.result[data-id='+index+']').addClass("active");
+      flag = false
+    }
+    // else as hidden clicked item and remove class active .
+    else{
+      if(index_flag == index && flag == false ){
+
+        $('.result[data-id='+index+']').removeClass("active");
+        $('.result[data-id='+index+']').addClass("hidden");
+        flag = true
+      }
+    }
+
+
+
+  })
+
+
+</script>
+</html>
