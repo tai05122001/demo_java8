@@ -8,11 +8,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Controller
 @RequestMapping(path = "demo/streamApi")
@@ -42,7 +41,7 @@ public class StreamApiController {
     }
 
     private String example_3() {
-        return null;
+        return "";
     }
 
     private String example_2() {
@@ -62,11 +61,16 @@ public class StreamApiController {
                         , p-> new PersonInfo(p.getName()
                         , p.getPhone(), p.getAddress()
                         , p.getAge()),(oldValue, newValue)->newValue));
-
+        // convert list object to map have one key and arr value second way
         Map<Integer, List<String> > map3 = persons.stream().collect(Collectors.toMap(
                 Person::getId, p-> addList(p.getName(), p.getPhone(),String.valueOf(p.getAge()),p.getAddress()),(oldValue, newValue)-> newValue));
 
-        return map3.toString();
+        return "Chuyển từ list object sang map có key và value đơn giản \n\n"+
+                map.toString()+
+                "\n\nChuyển từ list object sang map có key đơn giản và value là một object custom class \n\n"+
+                map2.toString()+
+                "\n\nChuyển từ list object sang map có key đơn giản và value là một list<String>  \n\n"+
+                map3.toString();
     }
     public List<String> addList(String a1 , String a2, String a3 ,String a4 ){
         return  Arrays.asList(a1,a2,a3,a4);
@@ -89,9 +93,22 @@ public class StreamApiController {
                 list.stream().filter(t->t%2==0).distinct().collect(Collectors.toList()).toString()+
                 "\nSử dụng stream().reduce() và district để tổng các số chẵn và chỉ xuất hiện một lần trong mảng \n"+
                 //Use stream().filter() and district(), reduce()  to sum all even element and only appear 1 times in list
-                list.stream().filter(t->t%2==0).distinct().reduce( (a,b)-> a+b).get();
+                list.stream().filter(t->t%2==0).distinct().reduce( (a,b)-> a+b).get()+
+                "\n Sử dụng stream().findFirst() để tìm kiếm giá trị đầu tiên thõa điều kiện " +
+                "một số lẻ là số nguyên số và chỉ xuất hiện duy nhất 1 lần trong mảng "+
+                // use stream().findFirst() to find first element fit conditions: odd, prime, unique in list
+                list.stream().filter(t-> checkPrimeDigit(t) && t%2==1).distinct().collect(Collectors.toList()).toString();
 
 
 
+    }
+
+    private boolean checkPrimeDigit(Integer t) {
+
+        if(t ==2 ) return true;
+        if(t <=1 ) return  false;
+        for (int i = 2; i<= Math.sqrt(t); i ++  )
+            if(t%i==0) return false;
+        return true;
     }
 }

@@ -30,7 +30,7 @@
   }
   .result{
     width: 100%;
-    max-height: 200px;
+    height: 300px;
     overflow-y:scroll;
   }
   .hidden{
@@ -39,29 +39,40 @@
   .active{
     display: block;
   }
-
+  .flex-d {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+  .flex-d i{
+    font-size: 32px!important;
+    color: #0047ff;
+    margin-right: 16px;
+  }
 </style>
 <body>
 <div class="content col-md-4">
-  <h3>Demo date and time APIs</h3>
+  <div class="flex-d" >
+    <a href="http://localhost:8080">
+      <i class="fa-solid fa-home"></i>
+    </a>
+    <h3>Demo date and time APIs</h3>
+  </div>
+
   <div >
     <div class="items">
-      <span>Example of date and time APIs </span>
+      <span>Example of LocalDate class </span>
       <i class="fa-solid fa-chevron-down details"></i>
     </div>
-    <textarea class="result hidden" data-id="1">
-
-            </textarea>
+    <textarea class="result hidden" data-id="1">[[${content_1}]]</textarea>
 
   </div>
   <div >
     <div class="items">
-      <span>Example of Functional Interface Customer</span>
+      <span>Example of LocalDate class </span>
       <i class="fa-solid fa-chevron-down details"></i>
     </div>
-    <textarea class="result hidden" data-id="2">
-
-            </textarea>
+    <textarea class="result hidden" data-id="2">[[${content_2}]]</textarea>
 
   </div>
   <div >

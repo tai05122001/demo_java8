@@ -58,6 +58,9 @@ public class Person {
         return  this.getAge()>a.getAge()?1:(this.getAge()==a.getAge()?0:-1);
 
     }
+    public boolean getAgeGraterThan18(){
+        return this.getAge()> 18;
+    }
 
     @Override
     public String toString() {

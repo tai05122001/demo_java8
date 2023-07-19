@@ -113,7 +113,7 @@ public class LambdaExpressionController {
         List<String> result = new ArrayList<>();
         persons.forEach(t-> result.add(t.getName()));
         // check list and show all person have age attribute > 18
-        List<Person> per_18 = persons.stream().filter(t->t.getAge()> 18).collect(Collectors.toList());
+        List<Person> per_18 = persons.stream().filter(Person::getAgeGraterThan18).collect(Collectors.toList());
         List<String> result2 = new ArrayList<>();
         per_18.forEach(t-> result2.add(t.getName()));
         // sort list follow func compare of Person
