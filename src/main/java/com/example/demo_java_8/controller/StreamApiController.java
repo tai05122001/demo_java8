@@ -37,11 +37,32 @@ public class StreamApiController {
     }
 
     private String example_4() {
-        return null;
+        List<String> strings = Arrays.asList("hello", "world", "java", "stream", "optional","opl","");
+        //convert all element with condition: uppercase
+        List<Integer> strings_Leng = strings.stream().map(String::length).collect(Collectors.toList());
+        List<String> strings_Upper = strings.stream().map(String::toUpperCase).collect(Collectors.toList());
+        List<String> string_notNull = strings.stream().filter(String::isEmpty).collect(Collectors.toList());
+
+        ;
+
+        return "Sử dụng method references với stream để viết in hoa các k tự trong chuỗi"+ strings_Upper.toString()+
+                "\nSử dụng method references với stream để hiển thị độ dài của các phần tử trong mảng "+ strings_Leng.toString()+
+                "\n Các chuỗi không phải null ở trong mảng  "+ string_notNull.toString()
+                ;
     }
 
     private String example_3() {
-        return "";
+        List<String> strings = Arrays.asList("hello", "world", "java", "stream", "optional","opl");
+        // find string have the longest length into list
+        Optional<String> longgestString = strings.stream().max((s1,s2)->Integer.compare(s1.length(),s2.length()));
+        // use Optional to save all element is a string start with "z " of list
+        Optional<String>string_startZ = strings.stream().filter(t-> t.startsWith("z")).findFirst();
+        // use stream to check all element into list with conditions: start with o than check symmetry string and 4 characters
+
+
+        return "Chuỗi dài nhất trong danh sách trên là: "+ (longgestString.isPresent()?longgestString.get():" Không có chuỗi dài nhất tồn tại")+
+                "\nChuỗi đầu tiên trong dãy bắt đầu bằng z: "+ (string_startZ.isPresent()?string_startZ.get():" không có chuỗi dài nhất tồn tại")
+                ;
     }
 
     private String example_2() {
