@@ -74,6 +74,8 @@ public class DateAndTimeAPIController {
         String stringFormat_Custom = localDateTime.format(dateTimeFormatter);
 
 
+
+
         return "Ngày và giờ hiện tại là " + localDateTime +
                 "\nNgày và giờ hiện tại theo định dạng FULL là "+ stringFormat_F +
                 "\nNgày và giờ hiện tại theo định dạng SHORT là "+ stringFormat_S +
@@ -87,6 +89,8 @@ public class DateAndTimeAPIController {
         LocalTime timePivot = LocalTime.of(12,59,20);
         LocalTime parsedTime = LocalTime.parse("14:30:45.333333");
         ValueRange hourRange = parsedTime.range(ChronoField.HOUR_OF_DAY);
+
+        ZonedDateTime nowUTC = ZonedDateTime.now(ZoneId.of("UTC"));
 
         return "Bây giờ là: "+ localTime
                 +"\nMốc thời gian khai báo là: "+ timePivot

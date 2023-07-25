@@ -1,6 +1,8 @@
 package com.example.demo_java_8.controller;
 
+import com.example.demo_java_8.interfaces.IFunction;
 import com.example.demo_java_8.model.Person;
+import com.example.demo_java_8.model.PersonInfo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +14,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping(path = "demo/functionalinterface")
@@ -58,18 +61,26 @@ public class FunctionalInterfaceController {
 
     private String example_4() {
         Predicate<Person> isAdult = p -> p.getAge() > 18;
+        Predicate<Person> isAdress = p -> (p.getAddress()!=null && p.getAddress().equals("Tiền Giang"));
+
         List<Person> persons = Arrays.asList(
                 new Person(1, "Trần Tấn Tài", "000000000", "Long An" ,18 ),
                 new Person(2, "Trần Văn B ", "020000000", "Long An" ,16 ),
-                new Person(3, "Nguyễn Thị C", "020000000", "Long An" ,24 )
+                new Person(3, "Nguyễn Thị C", "020000000", "Long An" ,24 ),
+                new Person(3, "Nguyễn Thị C", "020000000", "Tiền Giang" ,24 ),
+                new Person(3, "Nguyễn Thị C", "020000000", null ,24 )
 
         );
+        ;
+//        System.out.println(persons.stream().filter(isAdress).collect(Collectors.toList()).toString());
+
         List<Boolean> arr = new ArrayList<>();
         int i = 0;
         persons.forEach(t-> {
-            arr.add(isAdult.test(t));
+            arr.add(isAdress.test(t));
 
         });
+
 
         return " private String example_4() {\n" +
                 "        Predicate<Person> isAdult = p -> p.getAge() > 18;\n" +
@@ -96,11 +107,16 @@ public class FunctionalInterfaceController {
 
     private String example_3() {
         //create object function use to convert from Person obj to String obj
-        Function<Person, String > convertString =  s -> s.getName() +"\n"+s.getAddress();
+        Function< Person, String > convertString = (s) -> s.getName() +"\n"+ s.getAddress();
+
+        IFunction<Person, Person, String> converStringTwoParam = (a,b)-> a.getName()+ b.getName();
+
         // create object Person
         Person a = new Person(1, "Trần Tấn Tài", "000000000", "Long An" ,18 );
+        Person b = new Person(1, "Trần Tấn C", "000000000", "Long An" ,18 );
         // use String variable to save value
         String result = convertString.apply(a);
+        String result2 = converStringTwoParam.apply(a,b);
         //return view example
         return "private String example_3() {\n" +
                 "        //create object function use to convert from Person obj to String obj \n" +
@@ -112,7 +128,7 @@ public class FunctionalInterfaceController {
                 "        //return view example \n" +
                 "        return 'view of example ';\n" +
                 "    }\n"+
-                "Kết quả: result ="+ result;
+                "Kết quả: result ="+ result+ '\n' + result2 ;
     }
 
 
